@@ -135,7 +135,7 @@ def build_tables():
                 "hours": compute_hours(row["time_from"], row["time_to"]),
                 "depth_md_from": prev_depth,
                 "depth_md_to": row["depth_md_to"],
-                "phase": main_activity,
+                "main_activity": main_activity,
                 "activity_code": sub_activity or main_activity,
                 "state": row["state"],
                 "is_npt": row["state"] == "fail",
@@ -147,6 +147,39 @@ def build_tables():
     reports_df = pd.DataFrame(report_rows)
     return activity_df, reports_df, skipped_no_ops
 
+def add_phase(activity_df, reports_df):
+    reports_df = reports_df.copy()
+    reports_df["report_date_parsed"] = pd.to_datetime(reports_df["report_date"])
+    reports_df = reports_df.sort_values(["well_name_file", "report_date_parsed"])
+    reports_df["hole_dia_filled"] = reports_df.groupby("well_name_file")["hole_dia_in"].ffill()
+
+    activity_df = activity_df.copy()
+    activity_df["report_date_parsed"] = pd.to_datetime(activity_df["report_date"])
+
+    completion_start = (
+        activity_df.loc[activity_df["main_activity"] == "completion"]
+        .groupby("well_name_file")["report_date_parsed"]
+        .min()
+        .rename("completion_start")
+    )
+
+    activity_df = activity_df.merge(
+        reports_df[["report_id", "hole_dia_filled"]], on="report_id", how="left"
+    )
+    activity_df = activity_df.merge(completion_start, on="well_name_file", how="left")
+
+    def label(row):
+        if row["main_activity"] in ("completion", "plug abandon"):
+            return row["main_activity"]
+        if pd.notna(row["completion_start"]) and row["report_date_parsed"] >= row["completion_start"]:
+            return "post-completion"
+        if pd.notna(row["hole_dia_filled"]):
+            return f'{row["hole_dia_filled"]:g} in hole'
+        return None
+
+    activity_df["phase"] = activity_df.apply(label, axis=1)
+    return activity_df.drop(columns=["hole_dia_filled", "completion_start", "report_date_parsed"])
+
 def profile(activity_df, reports_df, skipped_no_ops):
     lines = []
     lines.append(f"Report files found: {len(reports_df)}")
@@ -156,8 +189,11 @@ def profile(activity_df, reports_df, skipped_no_ops):
     lines.append(f"Activity rows parsed: {len(activity_df)}")
     lines.append(f"Distinct wells (filename form): {activity_df['well_name_file'].nunique()}")
 
-    lines.append("\nPhase (main activity) value counts:")
-    lines.append(activity_df["phase"].value_counts().to_string())
+    lines.append("\nMain activity value counts:")
+    lines.append(activity_df["main_activity"].value_counts().to_string())
+
+    lines.append("\nPhase (hole section) value counts:")
+    lines.append(activity_df["phase"].value_counts(dropna=False).to_string())
 
     lines.append("\nState value counts:")
     lines.append(activity_df["state"].value_counts().to_string())
@@ -170,10 +206,19 @@ def profile(activity_df, reports_df, skipped_no_ops):
     off_24 = hours_per_report[(hours_per_report - 24).abs() > 0.01]
     lines.append(f"\nReports where activity hours don't sum to 24h: {len(off_24)} of {len(hours_per_report)}")
 
+    drilling = activity_df[
+        (activity_df["main_activity"] == "drilling") & (activity_df["activity_code"] == "drill")
+    ].sort_values(["well_name_file", "report_date", "seq"])
+    depth_diff = drilling.groupby("well_name_file")["depth_md_to"].diff()
+    non_monotonic = int((depth_diff < -0.01).sum())
+    lines.append(f"\nActual-drilling rows where depth decreased vs. the previous drilling row for that well: {non_monotonic} of {len(drilling)}")
+
     return "\n".join(lines), off_24
+
 
 if __name__ == "__main__":
     activity_df, reports_df, skipped_no_ops = build_tables()
+    activity_df = add_phase(activity_df, reports_df)
     report_text, off_24 = profile(activity_df, reports_df, skipped_no_ops)
 
     os.makedirs("docs", exist_ok=True)
