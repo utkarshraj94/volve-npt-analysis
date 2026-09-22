@@ -1,0 +1,32 @@
+level1,level2,description
+Productive,Drilling,Actively cutting new formation
+Productive,Casing/Cementing,Running and cementing casing strings
+Productive,Tripping,Running pipe or BHA in or out of hole
+Productive,Circulating,Circulating mud including planned bottoms-up before a trip
+Productive,Completion,Completion-phase work: perforating completion string sand control etc.
+Productive,Workover,Planned well intervention work
+Productive,Plug & Abandon,Planned well abandonment work
+Productive,Logging,Wireline or MWD logging runs
+Productive,Formation Evaluation,DST RFT/FIT coring and sampling
+Productive,Surveying,Directional surveys
+Productive,BOP/Wellhead,Routine BOP and wellhead operations or testing
+Productive,Monitoring,Routine pressure or parameter monitoring
+Productive,Sidetrack (Planned),Planned geological sidetrack not a recovery from a problem
+NPT - Wellbore,Hole Instability,Pack-offs tight hole or losses requiring a circulating stop
+NPT - Wellbore,Losses,Lost circulation events
+NPT - Wellbore,Well Control,Kicks and well control events
+NPT - Wellbore,Sidetrack (Corrective),Sidetrack drilled after losing the hole or getting stuck
+NPT - Downhole Equipment,Fishing,Retrieving lost or stuck downhole equipment
+NPT - Downhole Equipment,Failure,BHA bit MWD or LWD equipment failure
+NPT - Surface Equipment,Repair/Maintenance,Rig floor mud system or other surface equipment repair
+NPT - External,Weather,Waiting on weather
+NPT - External,Materials/Logistics,Waiting on materials boat helicopter or other logistics
+NPT - Other,HSE/Permits,Safety stoppages permits or third-party delays
+NPT - Other,Unspecified Wait,Generic waiting time with no further detail in the narrative
+NPT - Other,Unclassified,Interruption time whose narrative does not match any known keyword pattern -- needs manual review
+Rig Move / Mobilization,Mobilization,Rig skidding anchoring transit or positioning -- excluded from both Productive and NPT per project scope
+Productive,Perforating,Running perforating guns
+Productive,Wireline,Wireline runs and interventions
+NPT - External,Labor Action,Operations suspended due to labor strike or industrial action
+Productive,Other,Productive activity within a phase not matching a more specific sub-category
+NPT - Other,Operational Failure,Source flagged the operation as failed but the specific sub-type could not be determined
