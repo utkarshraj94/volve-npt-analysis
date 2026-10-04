@@ -35,7 +35,7 @@ queries = {
                ROUND(SUM(a.hours) FILTER (WHERE a.is_npt_final), 1)    AS npt_hours,
                ROUND(SUM(a.hours) FILTER (WHERE NOT c.is_rig_move), 1) AS billable_hours,
                ROUND(100.0 * SUM(a.hours) FILTER (WHERE a.is_npt_final)
-                   / NULLIF(SUM(a.hours) FILTER (WHERE NOT c.is_rig_move), 0), 2) AS npt_pct
+                   / NULLIF(SUM(a.hours), 0), 2) AS npt_pct
         FROM fact_drilling_activity a
         JOIN dim_npt_category c ON a.npt_cat_id = c.npt_cat_id
         JOIN dim_hole_phase   h ON a.phase_key  = h.phase_key
@@ -48,7 +48,7 @@ queries = {
                ROUND(SUM(a.hours) FILTER (WHERE a.is_npt_final), 1)              AS npt_hours,
                ROUND(SUM(a.hours) FILTER (WHERE NOT c.is_rig_move), 1)           AS billable_hours,
                ROUND(100.0 * SUM(a.hours) FILTER (WHERE a.is_npt_final)
-                   / NULLIF(SUM(a.hours) FILTER (WHERE NOT c.is_rig_move), 0), 2) AS npt_pct
+                   / NULLIF(SUM(a.hours), 0), 2) AS npt_pct
         FROM fact_drilling_activity a
         JOIN dim_date         d ON a.report_date = d.date_key
         JOIN dim_npt_category c ON a.npt_cat_id  = c.npt_cat_id
