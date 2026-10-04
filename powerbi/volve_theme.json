@@ -1,0 +1,67 @@
+{
+  "name": "Volve NPT Dark Industrial",
+  "dataColors": [
+    "#2E86AB",
+    "#E67E22",
+    "#5C6B73",
+    "#C0392B",
+    "#27AE60",
+    "#8E44AD",
+    "#F1C40F",
+    "#16A085"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1B2A33",
+  "tableAccent": "#2E86AB",
+  "good": "#27AE60",
+  "neutral": "#F1C40F",
+  "bad": "#C0392B",
+  "maximum": "#C0392B",
+  "center": "#F1C40F",
+  "minimum": "#2E86AB",
+  "null": "#B0B8BC",
+  "textClasses": {
+    "callout": {
+      "fontSize": 45,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1B2A33"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1B2A33"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#5C6B73"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#1B2A33"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }],
+        "title": [
+          {
+            "fontSize": 14,
+            "fontFamily": "Segoe UI Semibold",
+            "alignment": "left"
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "color": { "solid": { "color": "#1B2A33" } }, "fontSize": 45, "fontFamily": "Segoe UI Semibold" }],
+        "categoryLabels": [{ "color": { "solid": { "color": "#5C6B73" } }, "fontSize": 12 }]
+      }
+    }
+  }
+}
