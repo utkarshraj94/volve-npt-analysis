@@ -162,6 +162,31 @@ Chart.defaults.font.family = '"Segoe UI", system-ui, Arial, sans-serif';
 Chart.defaults.color = C.slate;
 Chart.defaults.maintainAspectRatio = false;
 
+// Value labels: a dataset with a `valueLabel: { fmt, color, font, halo }` property gets its values drawn on the chart.
+Chart.register({ id: 'valueLabels', afterDatasetsDraw(chart) {
+  const ctx = chart.ctx; ctx.save();
+  chart.data.datasets.forEach((ds, di) => {
+    const cfg = ds.valueLabel; if (!cfg || !chart.isDatasetVisible(di)) return;
+    const meta = chart.getDatasetMeta(di);
+    ctx.font = cfg.font || '11px "Segoe UI", Arial'; ctx.fillStyle = cfg.color || C.ink;
+    meta.data.forEach((el, i) => {
+      const vertical = meta.type === 'line' || (meta.type === 'bar' && chart.options.indexAxis !== 'y');
+      if (vertical && chart.width < 520 && i % 2) return;  // thin out labels on narrow charts
+      const txt = cfg.fmt(ds.data[i], i); if (!txt) return;
+      let x, y;
+      if (meta.type === 'bar') {
+        if (chart.options.indexAxis === 'y') { ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; x = el.x + 5; y = el.y; }
+        else { ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; x = el.x; y = el.y - 4; }
+      } else if (meta.type === 'doughnut') {
+        const a = (el.startAngle + el.endAngle) / 2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        x = el.x + (el.outerRadius + 17) * Math.cos(a); y = el.y + (el.outerRadius + 13) * Math.sin(a);
+      } else { ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; x = el.x; y = el.y - 7; }
+      if (cfg.halo) { ctx.lineWidth = 3; ctx.strokeStyle = '#fff'; ctx.strokeText(txt, x, y); }
+      ctx.fillText(txt, x, y);
+    });
+  });
+  ctx.restore(); } });
+
 let D = null;
 const charts = {};
 const drawn = {};
@@ -232,8 +257,9 @@ function renderHeadline() {
   mk('c-donut', { type: 'doughnut',
     data: { labels: ['Productive', 'NPT', 'Rig move'],
       datasets: [{ data: [k.productive_hours, k.npt_hours, k.rig_move_hours],
-        backgroundColor: [C.blue, C.red, C.slate], borderWidth: 2, borderColor: '#fff' }] },
-    options: { cutout: '66%', plugins: { legend: { position: 'bottom' },
+        backgroundColor: [C.blue, C.red, C.slate], borderWidth: 2, borderColor: '#fff',
+        valueLabel: { fmt: v => pct(v), font: '600 12px "Segoe UI", Arial' } }] },
+    options: { cutout: '66%', layout: { padding: 26 }, plugins: { legend: { position: 'bottom' },
       tooltip: { callbacks: { label: c => `${c.label}: ${n0(c.parsed)} hours (${pct(c.parsed)} of total)` } } } } });
   $('donut-center').innerHTML = (k.total_hours / 1000).toFixed(1) + 'k hrs';
 
@@ -267,13 +293,13 @@ function renderHeadline() {
   mk('c-year', { type: 'line',
     data: { labels: D.by_year.map(y => y.year), datasets: [
       { label: 'NPT %', data: D.by_year.map(y => Number(y.npt_pct)), borderColor: C.blue, backgroundColor: C.blue,
-        tension: .25, pointRadius: 3 },
+        tension: .25, pointRadius: 3, valueLabel: { fmt: v => n1(v) + '%', color: C.slate, font: '10px "Segoe UI", Arial', halo: true } },
       { label: 'Field average', data: D.by_year.map(() => k.npt_pct), borderColor: C.red, borderDash: [5, 4],
         pointRadius: 0, borderWidth: 1.5 }] },
     options: { plugins: { legend: { position: 'bottom' },
       tooltip: { callbacks: { label: c => c.datasetIndex === 1 ? `Field average: ${n1(c.parsed.y)}%`
         : `In ${c.label}, ${n1(c.parsed.y)}% of logged hours (${n0(D.by_year[c.dataIndex].npt_hours)} of ${n0(D.by_year[c.dataIndex].total_hours)}) were NPT.` } } },
-      scales: { y: { beginAtZero: true, grid: { color: C.grid }, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } } } });
+      scales: { y: { beginAtZero: true, grace: '12%', grid: { color: C.grid }, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } } } });
 }
 
 // ---------- Pareto ----------
@@ -284,13 +310,14 @@ function renderPareto() {
     card('Top 2 share', share(2).toFixed(1) + '%', 'red') + card('Top 5 share', share(5).toFixed(1) + '%');
   const lab = r => r.level1.replace(/^NPT - /, '') + ' / ' + r.level2;
   mk('c-pareto', { data: { labels: P.map(lab), datasets: [
-      { type: 'bar', label: 'NPT hours', data: P.map(r => Number(r.npt_hours)), backgroundColor: C.blue, yAxisID: 'y' },
+      { type: 'bar', label: 'NPT hours', data: P.map(r => Number(r.npt_hours)), backgroundColor: C.blue, yAxisID: 'y', valueLabel: { fmt: v => n0(v), font: '10px "Segoe UI", Arial' } },
       { type: 'line', label: 'Cumulative %', data: P.map(r => Number(r.cumulative_pct)), borderColor: C.orange,
-        backgroundColor: C.orange, yAxisID: 'y2', tension: .2, pointRadius: 3 }] },
-    options: { plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => c.dataset.type === 'line'
+        backgroundColor: C.orange, yAxisID: 'y2', tension: .2, pointRadius: 3,
+        valueLabel: { fmt: v => n0(v) + '%', color: '#B85F0A', font: '600 10px "Segoe UI", Arial', halo: true } }] },
+    options: { layout: { padding: { top: 18 } }, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => c.dataset.type === 'line'
         ? `Cumulative: ${n1(c.parsed.y)}% of all NPT`
         : `${lab(P[c.dataIndex])}: ${n0(c.parsed.y)} hours (${n1(P[c.dataIndex].pct_of_total_npt)}% of NPT)` } } },
-      scales: { y: { beginAtZero: true, title: { display: true, text: 'NPT hours' }, grid: { color: C.grid } },
+      scales: { y: { beginAtZero: true, grace: '8%', title: { display: true, text: 'NPT hours' }, grid: { color: C.grid } },
         y2: { position: 'right', min: 0, max: 100, title: { display: true, text: 'Cumulative %' }, grid: { display: false },
           ticks: { callback: v => v + '%' } },
         x: { ticks: { maxRotation: 60, minRotation: 45, font: { size: 10 }, callback(v) { const s = this.getLabelForValue(v); return s.length > 24 ? s.slice(0, 23) + '…' : s; } }, grid: { display: false } } } } });
@@ -324,8 +351,9 @@ function renderWellbore() {
   $('w-wrap').style.height = Math.max(200, rows.length * 22 + 50) + 'px';
   mk('c-well', { type: 'bar',
     data: { labels: rows.map(w => w.wellbore_key),
-      datasets: [{ data: rows.map(w => Number(w.npt_pct)), backgroundColor: rows.map(wellColor) }] },
-    options: { indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+      datasets: [{ data: rows.map(w => Number(w.npt_pct)), backgroundColor: rows.map(wellColor),
+        valueLabel: { fmt: v => n1(v) + '%' } }] },
+    options: { indexAxis: 'y', layout: { padding: { right: 46 } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
       const w = rows[c.dataIndex];
       return [`Wellbore ${w.wellbore_key} lost ${n1(w.npt_pct)}% of its rig hours to NPT`,
               `(${n0(w.npt_hours)} of ${n0(w.total_hours)} hours, ${w.is_exploration ? 'exploration' : 'development'} well).`]; } } } },
@@ -350,8 +378,9 @@ function renderCost() {
   const top = W.slice(0, 12);
   mk('c-cost', { type: 'bar',
     data: { labels: top.map(w => w.wellbore_key),
-      datasets: [{ data: top.map(w => w.npt_cost_usd / 1e6), backgroundColor: top.map(wellColor) }] },
-    options: { indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+      datasets: [{ data: top.map(w => w.npt_cost_usd / 1e6), backgroundColor: top.map(wellColor),
+        valueLabel: { fmt: v => '$' + v.toFixed(1) + 'M' } }] },
+    options: { indexAxis: 'y', layout: { padding: { right: 50 } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
       const w = top[c.dataIndex];
       return `Wellbore ${w.wellbore_key} cost an estimated ${usdM(w.npt_cost_usd)} in NPT, based on ${n0(w.npt_hours)} hours at $${n0(D.rate_usd_per_hr)}/hr.`; } } } },
       scales: { x: { grid: { color: C.grid }, ticks: { callback: v => '$' + v + 'M' } }, y: { grid: { display: false } } } } });
@@ -359,14 +388,18 @@ function renderCost() {
 
 // ---------- Scatter ----------
 const labelPlugin = { id: 'wellLabels', afterDatasetsDraw(chart) {
-  const { ctx } = chart; const meta = chart.getDatasetMeta(0); ctx.save(); ctx.fillStyle = C.ink; ctx.font = '12px "Segoe UI", Arial';
+  const { ctx } = chart; const meta = chart.getDatasetMeta(0); ctx.save();
   const POS = { 'F-1-C': 'up', 'F-5': 'down' };  // default: label to the right
   meta.data.forEach((pt, i) => {
-    const key = D.producers[i].wellbore_key, r = pt.options.radius, pos = POS[key] || 'right';
-    ctx.textAlign = pos === 'right' ? 'left' : 'center';
-    if (pos === 'right') ctx.fillText(key, pt.x + r + 5, pt.y + 4);
-    else if (pos === 'up') ctx.fillText(key, pt.x, pt.y - r - 6);
-    else ctx.fillText(key, pt.x, pt.y + r + 14);
+    const p = D.producers[i], r = pt.options.radius, pos = POS[p.wellbore_key] || 'right';
+    const name = p.wellbore_key, val = `${n1(p.npt_pct)}% | ${(p.cum_oil_bbl / 1e6).toFixed(1)}M bbl`;
+    ctx.font = '10px "Segoe UI", Arial'; const wVal = ctx.measureText(val).width;
+    const flip = pos === 'right' && pt.x + r + 5 + wVal > chart.width - 2;  // keep the label inside the chart
+    ctx.textAlign = pos === 'right' ? (flip ? 'right' : 'left') : 'center';
+    const x = pos === 'right' ? (flip ? pt.x - r - 5 : pt.x + r + 5) : pt.x;
+    const y = pos === 'right' ? pt.y - 1 : (pos === 'up' ? pt.y - r - 19 : pt.y + r + 14);
+    ctx.fillStyle = C.ink; ctx.font = '600 12px "Segoe UI", Arial'; ctx.fillText(name, x, y);
+    ctx.fillStyle = C.slate; ctx.font = '10px "Segoe UI", Arial'; ctx.fillText(val, x, y + 12);
   });
   ctx.restore(); } };
 function renderScatter() {
@@ -379,7 +412,7 @@ function renderScatter() {
       return [`Wellbore ${p.wellbore_key} ran at ${n1(p.npt_pct)}% NPT and produced`,
               `${(p.cum_oil_bbl / 1e6).toFixed(2)} million barrels, at an estimated cost of ${usdM(p.npt_cost_usd)}.`]; } } } },
       scales: { x: { min: 0, max: 65, title: { display: true, text: 'NPT %' }, grid: { color: C.grid }, ticks: { callback: v => v + '%' } },
-        y: { min: -3, max: 34, title: { display: true, text: 'Cumulative oil (million barrels)' }, grid: { color: C.grid },
+        y: { min: -5, max: 34, title: { display: true, text: 'Cumulative oil (million barrels)' }, grid: { color: C.grid },
           ticks: { callback: v => (v < 0 || v > 30 ? '' : v) } } } } });
 }
 
