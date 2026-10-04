@@ -11,7 +11,7 @@ SELECT
     SUM(a.hours) FILTER (WHERE NOT a.is_npt_final AND NOT c.is_rig_move)     AS productive_hours,
     ROUND(
         100.0 * SUM(a.hours) FILTER (WHERE a.is_npt_final)
-        / NULLIF(SUM(a.hours) FILTER (WHERE NOT c.is_rig_move), 0),
+        / NULLIF(SUM(a.hours), 0),      -- NPT % = NPT hours / total logged hours (rig moves stay in the denominator)
     2) AS npt_pct
 FROM fact_drilling_activity a
 JOIN dim_wellbore     w ON a.wellbore_key = w.wellbore_key
