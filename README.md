@@ -25,6 +25,8 @@ Python (extraction, parsing) → PostgreSQL (star schema) → Power BI (report)
 
 Five-page Power BI report: Headline, Pareto, Wellbore, Cost, NPT vs Production.
 
+**Live interactive dashboard:** [https://utkarshraj94.github.io/volve-npt-analysis/dashboard/](https://utkarshraj94.github.io/volve-npt-analysis/dashboard/)
+
 | | |
 |---|---|
 | ![Headline](docs/screenshots/01_headline.png) | ![Pareto](docs/screenshots/02_pareto.png) |
