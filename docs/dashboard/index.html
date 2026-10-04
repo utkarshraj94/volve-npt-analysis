@@ -179,6 +179,22 @@ function show(id) {
   else if (D) Object.values(charts).forEach(c => c.resize());
 }
 
+// Draws the 10% reference tick and the 0% / 30% end labels on the gauge (scale is 0-30%).
+const gaugeMarks = { id: 'gaugeMarks', afterDatasetsDraw(chart) {
+  const arc = chart.getDatasetMeta(0).data[0]; if (!arc) return;
+  const { x, y, innerRadius: ri, outerRadius: ro } = arc, ctx = chart.ctx;
+  const at = (v, r) => { const a = Math.PI + (v / 30) * Math.PI; return [x + r * Math.cos(a), y + r * Math.sin(a)]; };
+  ctx.save();
+  ctx.strokeStyle = C.ink; ctx.lineWidth = 3; ctx.beginPath();
+  const [x1, y1] = at(10, ri - 4), [x2, y2] = at(10, ro + 6);
+  ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.fillStyle = C.ink; ctx.font = '600 11px "Segoe UI", Arial'; ctx.textAlign = 'center';
+  const [lx, ly] = at(10, ro + 17); ctx.fillText('10% reference', lx, ly);
+  ctx.fillStyle = C.slate; ctx.font = '11px "Segoe UI", Arial';
+  ctx.fillText('0%', at(0, (ri + ro) / 2)[0], y + 14);
+  ctx.fillText('30%', at(30, (ri + ro) / 2)[0], y + 14);
+  ctx.restore(); } };
+
 // ---------- Headline ----------
 function renderHeadline() {
   const k = D.kpis;
@@ -203,11 +219,12 @@ function renderHeadline() {
       tooltip: { callbacks: { label: c => `${n0(c.parsed.x)} NPT hours (${(100 * c.parsed.x / k.npt_hours).toFixed(1)}% of all NPT)` } } },
       scales: { x: { grid: { color: C.grid } }, y: { grid: { display: false } } } } });
 
-  mk('c-gauge', { type: 'doughnut',
+  mk('c-gauge', { type: 'doughnut', plugins: [gaugeMarks],
     data: { labels: ['NPT %', 'Remaining to 30%'],
       datasets: [{ data: [k.npt_pct, 30 - k.npt_pct], backgroundColor: [C.red, C.grid], borderWidth: 0 }] },
-    options: { rotation: -90, circumference: 180, cutout: '72%', plugins: { legend: { display: false },
-      tooltip: { enabled: false } } } });
+    options: { rotation: -90, circumference: 180, cutout: '72%',
+      layout: { padding: { top: 28, left: 14, right: 14, bottom: 18 } },
+      plugins: { legend: { display: false }, tooltip: { enabled: false } } } });
   $('gauge-center').innerHTML = n1(k.npt_pct) + '%';
 
   mk('c-year', { type: 'line',
