@@ -1,0 +1,477 @@
+{
+  "rate_usd_per_hr": 12500,
+  "kpis": {
+    "total_hours": 39394.91,
+    "npt_hours": 7888.24,
+    "rig_move_hours": 997.0,
+    "productive_hours": 30509.670000000006,
+    "npt_pct": 20.023500497906962,
+    "npt_cost_usd": 98603000.0
+  },
+  "pareto": [
+    {
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 2914.86,
+      "pct_of_total_npt": 36.95,
+      "cumulative_pct": 36.95
+    },
+    {
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 1933.25,
+      "pct_of_total_npt": 24.51,
+      "cumulative_pct": 61.46
+    },
+    {
+      "level1": "NPT - External",
+      "level2": "Labor Action",
+      "npt_hours": 746.0,
+      "pct_of_total_npt": 9.46,
+      "cumulative_pct": 70.92
+    },
+    {
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 581.33,
+      "pct_of_total_npt": 7.37,
+      "cumulative_pct": 78.29
+    },
+    {
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 426.91,
+      "pct_of_total_npt": 5.41,
+      "cumulative_pct": 83.7
+    },
+    {
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 295.14,
+      "pct_of_total_npt": 3.74,
+      "cumulative_pct": 87.44
+    },
+    {
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 258.08,
+      "pct_of_total_npt": 3.27,
+      "cumulative_pct": 90.71
+    },
+    {
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 211.0,
+      "pct_of_total_npt": 2.67,
+      "cumulative_pct": 93.39
+    },
+    {
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 192.17,
+      "pct_of_total_npt": 2.44,
+      "cumulative_pct": 95.82
+    },
+    {
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 162.5,
+      "pct_of_total_npt": 2.06,
+      "cumulative_pct": 97.88
+    },
+    {
+      "level1": "NPT - Wellbore",
+      "level2": "Well Control",
+      "npt_hours": 57.5,
+      "pct_of_total_npt": 0.73,
+      "cumulative_pct": 98.61
+    },
+    {
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 40.0,
+      "pct_of_total_npt": 0.51,
+      "cumulative_pct": 99.12
+    },
+    {
+      "level1": "NPT - Other",
+      "level2": "Unspecified Wait",
+      "npt_hours": 36.0,
+      "pct_of_total_npt": 0.46,
+      "cumulative_pct": 99.58
+    },
+    {
+      "level1": "NPT - Wellbore",
+      "level2": "Sidetrack (Corrective)",
+      "npt_hours": 33.5,
+      "pct_of_total_npt": 0.42,
+      "cumulative_pct": 100.0
+    }
+  ],
+  "wellbores": [
+    {
+      "wellbore_key": "19-B",
+      "parent_well": "19",
+      "is_exploration": true,
+      "total_hours": 617.0,
+      "npt_hours": 484.5,
+      "npt_pct": 78.53,
+      "npt_cost_usd": 6056250.0
+    },
+    {
+      "wellbore_key": "F-11",
+      "parent_well": "F-11",
+      "is_exploration": false,
+      "total_hours": 389.5,
+      "npt_hours": 218.75,
+      "npt_pct": 56.16,
+      "npt_cost_usd": 2734375.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "parent_well": "19",
+      "is_exploration": true,
+      "total_hours": 2589.5,
+      "npt_hours": 994.0,
+      "npt_pct": 38.39,
+      "npt_cost_usd": 12425000.0
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "parent_well": "F-15",
+      "is_exploration": false,
+      "total_hours": 1819.5,
+      "npt_hours": 504.75,
+      "npt_pct": 27.74,
+      "npt_cost_usd": 6309375.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "parent_well": "19",
+      "is_exploration": true,
+      "total_hours": 1455.0,
+      "npt_hours": 395.0,
+      "npt_pct": 27.15,
+      "npt_cost_usd": 4937500.0
+    },
+    {
+      "wellbore_key": "F-11-A",
+      "parent_well": "F-11",
+      "is_exploration": false,
+      "total_hours": 283.5,
+      "npt_hours": 71.5,
+      "npt_pct": 25.22,
+      "npt_cost_usd": 893750.0
+    },
+    {
+      "wellbore_key": "F-4",
+      "parent_well": "F-4",
+      "is_exploration": false,
+      "total_hours": 2858.0,
+      "npt_hours": 696.75,
+      "npt_pct": 24.38,
+      "npt_cost_usd": 8709375.0
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "parent_well": "F-11",
+      "is_exploration": false,
+      "total_hours": 1230.5,
+      "npt_hours": 297.0,
+      "npt_pct": 24.14,
+      "npt_cost_usd": 3712500.0
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "parent_well": "F-1",
+      "is_exploration": false,
+      "total_hours": 1667.49,
+      "npt_hours": 350.75,
+      "npt_pct": 21.03,
+      "npt_cost_usd": 4384375.0
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "parent_well": "F-1",
+      "is_exploration": false,
+      "total_hours": 2220.24,
+      "npt_hours": 440.25,
+      "npt_pct": 19.83,
+      "npt_cost_usd": 5503125.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "parent_well": "19",
+      "is_exploration": true,
+      "total_hours": 2953.5,
+      "npt_hours": 571.5,
+      "npt_pct": 19.35,
+      "npt_cost_usd": 7143750.0
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "parent_well": "F-15",
+      "is_exploration": false,
+      "total_hours": 2251.98,
+      "npt_hours": 435.42,
+      "npt_pct": 19.33,
+      "npt_cost_usd": 5442750.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "parent_well": "F-15",
+      "is_exploration": false,
+      "total_hours": 1435.48,
+      "npt_hours": 264.75,
+      "npt_pct": 18.44,
+      "npt_cost_usd": 3309375.0
+    },
+    {
+      "wellbore_key": "F-12",
+      "parent_well": "F-12",
+      "is_exploration": false,
+      "total_hours": 3764.48,
+      "npt_hours": 674.75,
+      "npt_pct": 17.92,
+      "npt_cost_usd": 8434375.0
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "parent_well": "F-9",
+      "is_exploration": false,
+      "total_hours": 555.75,
+      "npt_hours": 99.5,
+      "npt_pct": 17.9,
+      "npt_cost_usd": 1243750.0
+    },
+    {
+      "wellbore_key": "19-S",
+      "parent_well": "19",
+      "is_exploration": true,
+      "total_hours": 1118.0,
+      "npt_hours": 158.5,
+      "npt_pct": 14.18,
+      "npt_cost_usd": 1981250.0
+    },
+    {
+      "wellbore_key": "F-14",
+      "parent_well": "F-14",
+      "is_exploration": false,
+      "total_hours": 2945.75,
+      "npt_hours": 383.0,
+      "npt_pct": 13.0,
+      "npt_cost_usd": 4787500.0
+    },
+    {
+      "wellbore_key": "F-15-B",
+      "parent_well": "F-15",
+      "is_exploration": false,
+      "total_hours": 129.75,
+      "npt_hours": 14.5,
+      "npt_pct": 11.18,
+      "npt_cost_usd": 181250.0
+    },
+    {
+      "wellbore_key": "F-1",
+      "parent_well": "F-1",
+      "is_exploration": false,
+      "total_hours": 842.5,
+      "npt_hours": 89.25,
+      "npt_pct": 10.59,
+      "npt_cost_usd": 1115625.0
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "parent_well": "F-11",
+      "is_exploration": false,
+      "total_hours": 1985.7,
+      "npt_hours": 203.33,
+      "npt_pct": 10.24,
+      "npt_cost_usd": 2541625.0
+    },
+    {
+      "wellbore_key": "F-5",
+      "parent_well": "F-5",
+      "is_exploration": false,
+      "total_hours": 2170.79,
+      "npt_hours": 219.24,
+      "npt_pct": 10.1,
+      "npt_cost_usd": 2740500.0
+    },
+    {
+      "wellbore_key": "F-9",
+      "parent_well": "F-9",
+      "is_exploration": false,
+      "total_hours": 670.25,
+      "npt_hours": 58.75,
+      "npt_pct": 8.77,
+      "npt_cost_usd": 734375.0
+    },
+    {
+      "wellbore_key": "F-15-A",
+      "parent_well": "F-15",
+      "is_exploration": false,
+      "total_hours": 775.5,
+      "npt_hours": 62.75,
+      "npt_pct": 8.09,
+      "npt_cost_usd": 784375.0
+    },
+    {
+      "wellbore_key": "F-10",
+      "parent_well": "F-10",
+      "is_exploration": false,
+      "total_hours": 1693.0,
+      "npt_hours": 132.5,
+      "npt_pct": 7.83,
+      "npt_cost_usd": 1656250.0
+    },
+    {
+      "wellbore_key": "F-7",
+      "parent_well": "F-7",
+      "is_exploration": false,
+      "total_hours": 817.75,
+      "npt_hours": 61.25,
+      "npt_pct": 7.49,
+      "npt_cost_usd": 765625.0
+    },
+    {
+      "wellbore_key": "F-1-A",
+      "parent_well": "F-1",
+      "is_exploration": false,
+      "total_hours": 154.5,
+      "npt_hours": 6.0,
+      "npt_pct": 3.88,
+      "npt_cost_usd": 75000.0
+    }
+  ],
+  "by_year": [
+    {
+      "year": 1992,
+      "npt_hours": 188.0,
+      "total_hours": 1418.0,
+      "npt_pct": 13.26
+    },
+    {
+      "year": 1993,
+      "npt_hours": 516.0,
+      "total_hours": 2452.5,
+      "npt_pct": 21.04
+    },
+    {
+      "year": 1997,
+      "npt_hours": 1714.0,
+      "total_hours": 4016.5,
+      "npt_pct": 42.67
+    },
+    {
+      "year": 1998,
+      "npt_hours": 185.5,
+      "total_hours": 846.0,
+      "npt_pct": 21.93
+    },
+    {
+      "year": 2007,
+      "npt_hours": 659.5,
+      "total_hours": 4716.75,
+      "npt_pct": 13.98
+    },
+    {
+      "year": 2008,
+      "npt_hours": 1307.75,
+      "total_hours": 7456.98,
+      "npt_pct": 17.54
+    },
+    {
+      "year": 2009,
+      "npt_hours": 414.0,
+      "total_hours": 3868.5,
+      "npt_pct": 10.7
+    },
+    {
+      "year": 2010,
+      "npt_hours": 55.5,
+      "total_hours": 374.5,
+      "npt_pct": 14.82
+    },
+    {
+      "year": 2012,
+      "npt_hours": 31.75,
+      "total_hours": 256.98,
+      "npt_pct": 12.36
+    },
+    {
+      "year": 2013,
+      "npt_hours": 1447.75,
+      "total_hours": 7062.74,
+      "npt_pct": 20.5
+    },
+    {
+      "year": 2014,
+      "npt_hours": 536.0,
+      "total_hours": 2743.22,
+      "npt_pct": 19.54
+    },
+    {
+      "year": 2015,
+      "npt_hours": 135.33,
+      "total_hours": 858.75,
+      "npt_pct": 15.76
+    },
+    {
+      "year": 2016,
+      "npt_hours": 697.16,
+      "total_hours": 3323.49,
+      "npt_pct": 20.98
+    }
+  ],
+  "producers": [
+    {
+      "wellbore_key": "F-12",
+      "npt_pct": 17.92,
+      "npt_hours": 674.75,
+      "cum_oil_bbl": 28804828.128,
+      "npt_hrs_per_kbbl": 0.0234,
+      "npt_cost_usd": 8434375.0
+    },
+    {
+      "wellbore_key": "F-14",
+      "npt_pct": 13.0,
+      "npt_hours": 383.0,
+      "cum_oil_bbl": 24795859.554,
+      "npt_hrs_per_kbbl": 0.0154,
+      "npt_cost_usd": 4787500.0
+    },
+    {
+      "wellbore_key": "F-11",
+      "npt_pct": 56.16,
+      "npt_hours": 218.75,
+      "cum_oil_bbl": 7219741.282,
+      "npt_hrs_per_kbbl": 0.0303,
+      "npt_cost_usd": 2734375.0
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "npt_pct": 19.83,
+      "npt_hours": 440.25,
+      "cum_oil_bbl": 1114472.891,
+      "npt_hrs_per_kbbl": 0.395,
+      "npt_cost_usd": 5503125.0
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "npt_pct": 19.33,
+      "npt_hours": 435.42,
+      "cum_oil_bbl": 934152.048,
+      "npt_hrs_per_kbbl": 0.4661,
+      "npt_cost_usd": 5442750.0
+    },
+    {
+      "wellbore_key": "F-5",
+      "npt_pct": 10.1,
+      "npt_hours": 219.24,
+      "cum_oil_bbl": 241734.632,
+      "npt_hrs_per_kbbl": 0.9069,
+      "npt_cost_usd": 2740500.0
+    }
+  ]
+}

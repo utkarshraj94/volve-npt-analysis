@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volve NPT Dashboard</title>
+<meta name="description" content="Interactive dashboard: non-productive time across 26 Volve wellbores, what it cost, and how it relates to production.">
+<style>
+  :root {
+    --ink: #1B2A33; --blue: #2E86AB; --orange: #E67E22; --red: #C0392B;
+    --slate: #5C6B73; --bg: #F4F6F8; --card: #FFFFFF; --line: #E3E7EA; --navbtn: #2A3D49;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 14px/1.45 "Segoe UI", system-ui, -apple-system, Arial, sans-serif; }
+  header { background: var(--ink); color: #fff; padding: 18px 24px 14px; }
+  header h1 { margin: 0 0 4px; font-size: 22px; font-weight: 600; }
+  header p { margin: 0 0 12px; color: #B0B8BC; font-size: 13px; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; }
+  nav button { background: var(--navbtn); color: #D5DADD; border: 0; border-radius: 4px;
+               padding: 7px 14px; font: inherit; font-size: 12px; cursor: pointer; }
+  nav button:hover { background: #35505F; }
+  nav button[aria-current="page"] { background: var(--blue); color: #fff; font-weight: 600; }
+  nav button:focus-visible, .chip:focus-visible, select:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 16px; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .takeaway { font-size: 15px; font-weight: 600; margin: 4px 0 14px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .card { background: var(--card); border-radius: 6px; padding: 12px 16px; }
+  .card .lbl { color: var(--slate); font-size: 12px; }
+  .card .val { font-size: 30px; font-weight: 600; line-height: 1.15; }
+  .card .sub { color: var(--slate); font-size: 12px; }
+  .val.red { color: var(--red); } .val.green { color: #27AE60; }
+  .grid { display: grid; gap: 12px; margin-bottom: 14px; }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .g2 { grid-template-columns: 2fr 1fr; }
+  @media (max-width: 800px) { .g2 { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border-radius: 6px; padding: 12px 16px; min-width: 0; }
+  .panel h2 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+  .cv { position: relative; height: 260px; }
+  .cv.tall { height: 420px; } .cv.mid { height: 320px; } .cv.wide { height: 280px; }
+  .center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            pointer-events: none; font-size: 18px; font-weight: 600; text-align: center; }
+  .center.low { align-items: flex-end; padding-bottom: 18px; font-size: 26px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--slate); font-weight: 600; }
+  tr.total td { font-weight: 600; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .chip { background: #fff; border: 1px solid #D5DADD; border-radius: 4px; padding: 6px 12px; font: inherit; font-size: 12px; cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+  select { border: 1px solid #D5DADD; border-radius: 4px; padding: 6px 8px; font: inherit; font-size: 12px; background: #fff; }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--slate); margin-bottom: 6px; }
+  .sw { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: baseline; }
+  .note { color: var(--slate); font-size: 12px; margin-top: 8px; }
+  .findings p { margin: 0 0 10px; } .findings h3 { margin: 14px 0 4px; font-size: 13px; color: var(--red); }
+  footer { max-width: 1240px; margin: 0 auto; padding: 8px 16px 28px; color: var(--slate); font-size: 12px; }
+  footer a { color: var(--blue); }
+  #err { display: none; margin: 16px; padding: 12px; background: #FDECEA; color: #7A1F16; border-radius: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Volve Field: 1 in 5 Rig Hours Was Non-Productive</h1>
+  <p>Non-productive time (NPT) across 26 wellbores: where it went, what it cost, and how it relates to production</p>
+  <nav id="nav" aria-label="Dashboard pages"></nav>
+</header>
+<div id="err" role="alert"></div>
+<main>
+  <!-- HEADLINE -->
+  <section class="page" id="p-headline" aria-label="Headline">
+    <div class="cards" id="h-cards"></div>
+    <div class="grid g3">
+      <div class="panel"><h2>Where the hours went</h2>
+        <div class="cv"><canvas id="c-donut" role="img" aria-label="Donut chart of productive, NPT and rig move hours"></canvas>
+          <div class="center" id="donut-center"></div></div></div>
+      <div class="panel"><h2>NPT hours by category</h2>
+        <div class="cv"><canvas id="c-cat" role="img" aria-label="Bar chart of NPT hours by level 1 category"></canvas></div></div>
+      <div class="panel"><h2>NPT % vs a 10% reference</h2>
+        <div class="cv"><canvas id="c-gauge" role="img" aria-label="Gauge showing NPT percent against a 10 percent reference"></canvas>
+          <div class="center low" id="gauge-center"></div></div>
+        <div class="note">The 10% reference is an illustrative benchmark, not a sourced industry figure.</div></div>
+    </div>
+    <div class="panel"><h2>Annual NPT % (dashed line = field average)</h2>
+      <div class="cv wide"><canvas id="c-year" role="img" aria-label="Line chart of NPT percent by year"></canvas></div>
+      <div class="note">Years with no drilling reports (1994-96, 1999-2006, 2011) do not appear. The 1997 exploration campaign is the outlier.</div></div>
+  </section>
+
+  <!-- PARETO -->
+  <section class="page" id="p-pareto" aria-label="Pareto">
+    <div class="takeaway">Two categories own 62% of all NPT</div>
+    <div class="cards" id="p-cards"></div>
+    <div class="grid g2">
+      <div class="panel"><h2>NPT hours by category, with cumulative %</h2>
+        <div class="cv tall"><canvas id="c-pareto" role="img" aria-label="Pareto chart of NPT hours by category with cumulative percent line"></canvas></div></div>
+      <div class="panel"><h2>Category detail</h2><div id="p-table"></div></div>
+    </div>
+  </section>
+
+  <!-- WELLBORE -->
+  <section class="page" id="p-wellbore" aria-label="Wellbore">
+    <div class="takeaway">Two short wells have the worst NPT rates</div>
+    <div class="filters" id="w-filters"></div>
+    <div class="cards" id="w-cards"></div>
+    <div class="panel"><h2>NPT % by wellbore</h2>
+      <div class="legend"><span><i class="sw" style="background:#E67E22"></i>Exploration</span><span><i class="sw" style="background:#2E86AB"></i>Development</span></div>
+      <div class="cv tall" id="w-wrap"><canvas id="c-well" role="img" aria-label="Horizontal bar chart of NPT percent by wellbore"></canvas></div>
+      <div class="note" id="w-note"></div></div>
+  </section>
+
+  <!-- COST -->
+  <section class="page" id="p-cost" aria-label="Cost">
+    <div class="takeaway" id="cost-take"></div>
+    <div class="cards" id="c-cards"></div>
+    <div class="panel"><h2>Modelled NPT cost by wellbore, top 12 ($M)</h2>
+      <div class="legend"><span><i class="sw" style="background:#E67E22"></i>Exploration</span><span><i class="sw" style="background:#2E86AB"></i>Development</span></div>
+      <div class="cv tall"><canvas id="c-cost" role="img" aria-label="Bar chart of modelled NPT cost by wellbore"></canvas></div>
+      <div class="note">Cost = NPT hours x an assumed $12,500 per rig-hour. The rate is a modelling assumption, not a reported figure; rankings are more reliable than absolute dollars.</div></div>
+  </section>
+
+  <!-- SCATTER -->
+  <section class="page" id="p-scatter" aria-label="NPT vs Production">
+    <div class="takeaway">High NPT did not predict lower production (small sample)</div>
+    <div class="grid g2">
+      <div class="panel"><h2>NPT % vs cumulative oil (million barrels); bubble size = modelled NPT cost</h2>
+        <div class="cv tall"><canvas id="c-scatter" role="img" aria-label="Bubble chart of NPT percent against cumulative oil for six producing wells"></canvas></div></div>
+      <div class="panel findings"><h2>What the data says</h2>
+        <p>F-14 ran at 13.0% NPT and was the most efficient producer, at 0.015 NPT hours per thousand barrels.</p>
+        <p>F-12 ran at 17.9% NPT and produced the most oil, 28.8 million barrels.</p>
+        <p>F-11 lost 56.2% of its hours to NPT and still produced 7.2 million barrels.</p>
+        <p>F-5 had 10.1% NPT but only 0.24 million barrels, the worst hours-per-barrel ratio (0.91).</p>
+        <h3>Conclusion</h3>
+        <p>Among the six wells with oil data, high NPT did not go with low production. The best and the largest producers had moderate NPT, and the highest-NPT well still produced. This is a small sample, so treat it as a pattern, not a proof. Water injectors are excluded.</p></div>
+    </div>
+  </section>
+</main>
+<footer>
+  NPT % = NPT hours / total logged hours. Data: Equinor Volve open dataset (Equinor ASA and the former Volve licence partners), shown for educational, non-commercial portfolio use; this page carries only aggregated figures.
+  Source and full report: <a href="https://github.com/utkarshraj94/volve-npt-analysis">github.com/utkarshraj94/volve-npt-analysis</a>.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+const C = { ink: '#1B2A33', blue: '#2E86AB', orange: '#E67E22', red: '#C0392B', slate: '#5C6B73', grid: '#E3E7EA' };
+const n0 = n => Math.round(n).toLocaleString('en-US');
+const n1 = n => Number(n).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const usdM = n => '$' + (n / 1e6).toFixed(1) + 'M';
+const wellColor = w => (w.is_exploration ? C.orange : C.blue);
+const $ = id => document.getElementById(id);
+const card = (lbl, val, cls = '', sub = '') =>
+  `<div class="card"><div class="lbl">${lbl}</div><div class="val ${cls}">${val}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`;
+
+Chart.defaults.font.family = '"Segoe UI", system-ui, Arial, sans-serif';
+Chart.defaults.color = C.slate;
+Chart.defaults.maintainAspectRatio = false;
+
+let D = null;
+const charts = {};
+const drawn = {};
+function mk(id, cfg) { if (charts[id]) charts[id].destroy(); charts[id] = new Chart($(id), cfg); }
+
+const PAGES = [
+  ['headline', 'Headline', renderHeadline],
+  ['pareto', 'Pareto', renderPareto],
+  ['wellbore', 'Wellbore', renderWellbore],
+  ['cost', 'Cost', renderCost],
+  ['scatter', 'NPT vs Production', renderScatter],
+];
+
+function show(id) {
+  if (!PAGES.some(p => p[0] === id)) id = 'headline';
+  PAGES.forEach(([pid]) => $('p-' + pid).classList.toggle('active', pid === id));
+  document.querySelectorAll('#nav button').forEach(b => {
+    if (b.dataset.id === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+  if (D && !drawn[id]) { PAGES.find(p => p[0] === id)[2](); drawn[id] = true; }
+  else if (D) Object.values(charts).forEach(c => c.resize());
+}
+
+// ---------- Headline ----------
+function renderHeadline() {
+  const k = D.kpis;
+  $('h-cards').innerHTML =
+    card('NPT %', n1(k.npt_pct) + '%', 'red') + card('Total hours', n0(k.total_hours)) +
+    card('NPT hours', n0(k.npt_hours)) + card('Modelled NPT cost', usdM(k.npt_cost_usd));
+  const pct = v => (100 * v / k.total_hours).toFixed(1) + '%';
+  mk('c-donut', { type: 'doughnut',
+    data: { labels: ['Productive', 'NPT', 'Rig move'],
+      datasets: [{ data: [k.productive_hours, k.npt_hours, k.rig_move_hours],
+        backgroundColor: [C.blue, C.red, C.slate], borderWidth: 2, borderColor: '#fff' }] },
+    options: { cutout: '66%', plugins: { legend: { position: 'bottom' },
+      tooltip: { callbacks: { label: c => `${c.label}: ${n0(c.parsed)} hours (${pct(c.parsed)} of total)` } } } } });
+  $('donut-center').innerHTML = (k.total_hours / 1000).toFixed(1) + 'k hrs';
+
+  const byL1 = {};
+  D.pareto.forEach(r => { const key = r.level1.replace(/^NPT - /, ''); byL1[key] = (byL1[key] || 0) + Number(r.npt_hours); });
+  const l1 = Object.entries(byL1).sort((a, b) => b[1] - a[1]);
+  mk('c-cat', { type: 'bar',
+    data: { labels: l1.map(x => x[0]), datasets: [{ data: l1.map(x => x[1]), backgroundColor: C.blue }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: c => `${n0(c.parsed.x)} NPT hours (${(100 * c.parsed.x / k.npt_hours).toFixed(1)}% of all NPT)` } } },
+      scales: { x: { grid: { color: C.grid } }, y: { grid: { display: false } } } } });
+
+  mk('c-gauge', { type: 'doughnut',
+    data: { labels: ['NPT %', 'Remaining to 30%'],
+      datasets: [{ data: [k.npt_pct, 30 - k.npt_pct], backgroundColor: [C.red, C.grid], borderWidth: 0 }] },
+    options: { rotation: -90, circumference: 180, cutout: '72%', plugins: { legend: { display: false },
+      tooltip: { enabled: false } } } });
+  $('gauge-center').innerHTML = n1(k.npt_pct) + '%';
+
+  mk('c-year', { type: 'line',
+    data: { labels: D.by_year.map(y => y.year), datasets: [
+      { label: 'NPT %', data: D.by_year.map(y => Number(y.npt_pct)), borderColor: C.blue, backgroundColor: C.blue,
+        tension: .25, pointRadius: 3 },
+      { label: 'Field average', data: D.by_year.map(() => k.npt_pct), borderColor: C.red, borderDash: [5, 4],
+        pointRadius: 0, borderWidth: 1.5 }] },
+    options: { plugins: { legend: { position: 'bottom' },
+      tooltip: { callbacks: { label: c => c.datasetIndex === 1 ? `Field average: ${n1(c.parsed.y)}%`
+        : `In ${c.label}, ${n1(c.parsed.y)}% of logged hours (${n0(D.by_year[c.dataIndex].npt_hours)} of ${n0(D.by_year[c.dataIndex].total_hours)}) were NPT.` } } },
+      scales: { y: { beginAtZero: true, grid: { color: C.grid }, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } } } });
+}
+
+// ---------- Pareto ----------
+function renderPareto() {
+  const P = D.pareto, k = D.kpis;
+  const share = n => P.slice(0, n).reduce((s, r) => s + Number(r.pct_of_total_npt), 0);
+  $('p-cards').innerHTML = card('NPT hours', n0(k.npt_hours)) + card('Top 1 share', share(1).toFixed(1) + '%') +
+    card('Top 2 share', share(2).toFixed(1) + '%', 'red') + card('Top 5 share', share(5).toFixed(1) + '%');
+  const lab = r => r.level1.replace(/^NPT - /, '') + ' / ' + r.level2;
+  mk('c-pareto', { data: { labels: P.map(lab), datasets: [
+      { type: 'bar', label: 'NPT hours', data: P.map(r => Number(r.npt_hours)), backgroundColor: C.blue, yAxisID: 'y' },
+      { type: 'line', label: 'Cumulative %', data: P.map(r => Number(r.cumulative_pct)), borderColor: C.orange,
+        backgroundColor: C.orange, yAxisID: 'y2', tension: .2, pointRadius: 3 }] },
+    options: { plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => c.dataset.type === 'line'
+        ? `Cumulative: ${n1(c.parsed.y)}% of all NPT`
+        : `${lab(P[c.dataIndex])}: ${n0(c.parsed.y)} hours (${n1(P[c.dataIndex].pct_of_total_npt)}% of NPT)` } } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: 'NPT hours' }, grid: { color: C.grid } },
+        y2: { position: 'right', min: 0, max: 100, title: { display: true, text: 'Cumulative %' }, grid: { display: false },
+          ticks: { callback: v => v + '%' } },
+        x: { ticks: { maxRotation: 60, minRotation: 45, font: { size: 10 }, callback(v) { const s = this.getLabelForValue(v); return s.length > 24 ? s.slice(0, 23) + '…' : s; } }, grid: { display: false } } } } });
+  $('p-table').innerHTML = '<table><tr><th>Category</th><th>Hours</th><th>% of NPT</th></tr>' +
+    P.map(r => `<tr><td>${lab(r)}</td><td>${n1(r.npt_hours)}</td><td>${n1(r.pct_of_total_npt)}%</td></tr>`).join('') +
+    `<tr class="total"><td>Total</td><td>${n1(k.npt_hours)}</td><td>100.0%</td></tr></table>`;
+}
+
+// ---------- Wellbore ----------
+const WS = { type: 'all', parent: 'all' };
+function renderWellbore() {
+  const parents = [...new Set(D.wellbores.map(w => w.parent_well).filter(Boolean))].sort();
+  $('w-filters').innerHTML =
+    ['all', 'Exploration', 'Development'].map(t =>
+      `<button class="chip" data-type="${t}" aria-pressed="${WS.type === t}">${t === 'all' ? 'All wells' : t}</button>`).join('') +
+    `<label for="w-parent" style="margin-left:8px;color:#5C6B73;font-size:12px">Parent well</label>
+     <select id="w-parent"><option value="all">All</option>${parents.map(p => `<option>${p}</option>`).join('')}</select>`;
+  $('w-parent').value = WS.parent;
+  document.querySelectorAll('#w-filters .chip').forEach(b => b.onclick = () => { WS.type = b.dataset.type; renderWellbore(); });
+  $('w-parent').onchange = e => { WS.parent = e.target.value; renderWellbore(); };
+
+  const rows = D.wellbores.filter(w =>
+    (WS.type === 'all' || (WS.type === 'Exploration') === w.is_exploration) &&
+    (WS.parent === 'all' || w.parent_well === WS.parent) && w.npt_pct !== null)
+    .sort((a, b) => b.npt_pct - a.npt_pct);
+  if (!rows.length) { $('w-cards').innerHTML = card('Wellbores', '0'); return; }
+  const worst = rows[0], best = rows[rows.length - 1];
+  $('w-cards').innerHTML = card('Wellbores shown', rows.length) +
+    card('Worst NPT %', n1(worst.npt_pct) + '%', 'red', 'Well ' + worst.wellbore_key) +
+    card('Best NPT %', n1(best.npt_pct) + '%', 'green', 'Well ' + best.wellbore_key);
+  $('w-wrap').style.height = Math.max(200, rows.length * 22 + 50) + 'px';
+  mk('c-well', { type: 'bar',
+    data: { labels: rows.map(w => w.wellbore_key),
+      datasets: [{ data: rows.map(w => Number(w.npt_pct)), backgroundColor: rows.map(wellColor) }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+      const w = rows[c.dataIndex];
+      return [`Wellbore ${w.wellbore_key} lost ${n1(w.npt_pct)}% of its rig hours to NPT`,
+              `(${n0(w.npt_hours)} of ${n0(w.total_hours)} hours, ${w.is_exploration ? 'exploration' : 'development'} well).`]; } } } },
+      scales: { x: { grid: { color: C.grid }, ticks: { callback: v => v + '%' } }, y: { grid: { display: false }, ticks: { autoSkip: false } } } } });
+
+  const grp = ex => { const g = D.wellbores.filter(w => w.is_exploration === ex);
+    return 100 * g.reduce((s, w) => s + Number(w.npt_hours), 0) / g.reduce((s, w) => s + Number(w.total_hours), 0); };
+  const byHrs = [...D.wellbores].sort((a, b) => b.npt_hours - a.npt_hours);
+  let cum = 0, need = 0; const tot = byHrs.reduce((s, w) => s + Number(w.npt_hours), 0);
+  for (const w of byHrs) { cum += Number(w.npt_hours); need++; if (cum / tot >= 0.8) break; }
+  $('w-note').innerHTML = `Exploration wells average ${n1(grp(true))}% NPT against ${n1(grp(false))}% for development wells. ` +
+    `The two highest rates (19-B and F-11) are on short wells of under 650 hours each. ` +
+    `${need} of ${D.wellbores.length} wellbores account for ${(100 * cum / tot).toFixed(0)}% of all NPT hours.`;
+}
+
+// ---------- Cost ----------
+function renderCost() {
+  const k = D.kpis, W = [...D.wellbores].sort((a, b) => b.npt_cost_usd - a.npt_cost_usd);
+  $('cost-take').textContent = `NPT cost an estimated ${usdM(k.npt_cost_usd)}`;
+  $('c-cards').innerHTML = card('Total NPT cost', usdM(k.npt_cost_usd), 'red') + card('NPT hours', n0(k.npt_hours)) +
+    card('Assumed rig rate', '$' + n0(D.rate_usd_per_hr) + '/hr') + card('Costliest well', usdM(W[0].npt_cost_usd), '', 'Well ' + W[0].wellbore_key);
+  const top = W.slice(0, 12);
+  mk('c-cost', { type: 'bar',
+    data: { labels: top.map(w => w.wellbore_key),
+      datasets: [{ data: top.map(w => w.npt_cost_usd / 1e6), backgroundColor: top.map(wellColor) }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+      const w = top[c.dataIndex];
+      return `Wellbore ${w.wellbore_key} cost an estimated ${usdM(w.npt_cost_usd)} in NPT, based on ${n0(w.npt_hours)} hours at $${n0(D.rate_usd_per_hr)}/hr.`; } } } },
+      scales: { x: { grid: { color: C.grid }, ticks: { callback: v => '$' + v + 'M' } }, y: { grid: { display: false } } } } });
+}
+
+// ---------- Scatter ----------
+const labelPlugin = { id: 'wellLabels', afterDatasetsDraw(chart) {
+  const { ctx } = chart; const meta = chart.getDatasetMeta(0); ctx.save(); ctx.fillStyle = C.ink; ctx.font = '12px "Segoe UI", Arial';
+  const POS = { 'F-1-C': 'up', 'F-5': 'down' };  // default: label to the right
+  meta.data.forEach((pt, i) => {
+    const key = D.producers[i].wellbore_key, r = pt.options.radius, pos = POS[key] || 'right';
+    ctx.textAlign = pos === 'right' ? 'left' : 'center';
+    if (pos === 'right') ctx.fillText(key, pt.x + r + 5, pt.y + 4);
+    else if (pos === 'up') ctx.fillText(key, pt.x, pt.y - r - 6);
+    else ctx.fillText(key, pt.x, pt.y + r + 14);
+  });
+  ctx.restore(); } };
+function renderScatter() {
+  const P = D.producers;
+  mk('c-scatter', { type: 'bubble', plugins: [labelPlugin],
+    data: { datasets: [{ data: P.map(p => ({ x: Number(p.npt_pct), y: p.cum_oil_bbl / 1e6, r: 6 + Math.sqrt(p.npt_cost_usd / 1e6) * 3.5 })),
+      backgroundColor: P.map(p => p.npt_pct > 40 ? 'rgba(192,57,43,.75)' : 'rgba(46,134,171,.75)') }] },
+    options: { layout: { padding: { right: 24, top: 12 } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+      const p = P[c.dataIndex];
+      return [`Wellbore ${p.wellbore_key} ran at ${n1(p.npt_pct)}% NPT and produced`,
+              `${(p.cum_oil_bbl / 1e6).toFixed(2)} million barrels, at an estimated cost of ${usdM(p.npt_cost_usd)}.`]; } } } },
+      scales: { x: { min: 0, max: 65, title: { display: true, text: 'NPT %' }, grid: { color: C.grid }, ticks: { callback: v => v + '%' } },
+        y: { min: -3, max: 34, title: { display: true, text: 'Cumulative oil (million barrels)' }, grid: { color: C.grid },
+          ticks: { callback: v => (v < 0 || v > 30 ? '' : v) } } } } });
+}
+
+// ---------- boot ----------
+$('nav').innerHTML = PAGES.map(([id, label]) => `<button data-id="${id}">${label}</button>`).join('');
+document.querySelectorAll('#nav button').forEach(b => b.onclick = () => { location.hash = b.dataset.id; });
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+fetch('data.json').then(r => { if (!r.ok) throw new Error('data.json: HTTP ' + r.status); return r.json(); })
+  .then(d => { D = d; show(location.hash.slice(1) || 'headline'); })
+  .catch(e => { const el = $('err'); el.style.display = 'block'; el.textContent = 'Could not load the data: ' + e.message; });
+</script>
+</body>
+</html>
