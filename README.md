@@ -3,7 +3,7 @@
 Analysis of non-productive time across the Volve drilling campaign, and whether
 the wells that were hardest to drill were the wells worth drilling.
 
-> **Status:** Phase 0 complete — scaffold and schema in place. Analysis in progress.
+> **Status:** Complete. Phases 0-6 done: extraction, NPT classification, PostgreSQL star schema, Power BI report.
 
 ## The question
 
@@ -13,11 +13,27 @@ higher production?
 
 ## Headline finding
 
-_To be filled in. One sentence, with a number._
+About 20.0% of logged rig time (7,888 of 39,395 hours, 26 wellbores) was non-productive, and two causes,
+surface-equipment repair and weather, account for 61% of it. Among the six wells with oil data, high NPT
+did not go with low production.
 
 ## Stack
 
 Python (extraction, parsing) → PostgreSQL (star schema) → Power BI (report)
+
+## The report
+
+Five-page Power BI report: Headline, Pareto, Wellbore, Cost, NPT vs Production.
+
+| | |
+|---|---|
+| ![Headline](docs/screenshots/01_headline.png) | ![Pareto](docs/screenshots/02_pareto.png) |
+| ![Wellbore](docs/screenshots/03_wellbore.png) | ![Cost](docs/screenshots/04_cost.png) |
+| ![NPT vs Production](docs/screenshots/05_npt_vs_production.png) | |
+
+Files: [`powerbi/volve_npt.pbix`](powerbi/volve_npt.pbix) and a
+[PDF export](powerbi/volve_npt_report.pdf). Full write-up:
+[`docs/Volve_NPT_Project_Report.docx`](docs/Volve_NPT_Project_Report.docx).
 
 ## Reproduce
 
@@ -46,16 +62,17 @@ python src/01_inventory.py
 | `data/reference/` | NPT taxonomy, wellbore name map — **versioned** |
 | `data/raw/`, `data/interim/` | Local only, gitignored (licence) |
 | `docs/` | Setup, methodology, data dictionary, full report |
-| `powerbi/` | Report file |
+| `docs/screenshots/` | Report page images |
+| `powerbi/` | Power BI report (.pbix), PDF export, theme |
 
 ## Important caveats
 
 - **Costs are modelled, not actual.** Equinor did not publish AFE data. The cost
-  layer derives from published North Sea day rates with a stated spread
-  multiplier. Absolute figures are indicative; the ranking of NPT categories is
-  the durable result.
-- **~20 wellbores.** This is a descriptive operational review, not a statistical
-  or predictive study.
+  layer is NPT hours x an assumed $12,500 per rig-hour (see `sql/03_transforms.sql`).
+  The rate is an assumption with no recorded source; absolute dollars are indicative,
+  while the ranking of categories and wells is the durable result.
+- **26 wellbores, six with oil data.** This is a descriptive operational review,
+  not a statistical or predictive study.
 - **Sidetracks are separate wellbores**, with the parent well available as a
   rollup. See the methodology note for why.
 
@@ -63,7 +80,10 @@ python src/01_inventory.py
 
 Volve field dataset, released by Equinor ASA and the Volve licence partners for
 study, research and development purposes. See [`LICENCE-DATA.md`](LICENCE-DATA.md).
-No source data is redistributed in this repository.
+The Power BI file embeds data derived from the Volve dataset (daily drilling reports
+and production volumes), shared here for educational, non-commercial portfolio use.
+Source: Equinor ASA and the former Volve licence partners. Raw source files are not
+included in this repository.
 
 ## Code licence
 

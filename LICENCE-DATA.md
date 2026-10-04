@@ -22,7 +22,11 @@ This project and its outputs are for educational / portfolio purposes only,
 
 non-commercial. Raw data files are not committed to this repository — see
 
-`.gitignore`. Refer to the original licence terms document distributed with
+`.gitignore`. The Power BI file (`powerbi/volve_npt.pbix`) embeds derived data
+
+from the dataset for non-commercial portfolio use, with attribution to Equinor ASA
+
+and the former Volve licence partners. Refer to the original licence terms document distributed with
 
 the dataset for full conditions.
 
