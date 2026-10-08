@@ -473,5 +473,1093 @@
       "npt_hrs_per_kbbl": 0.9069,
       "npt_cost_usd": 2740500.0
     }
+  ],
+  "well_category": [
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - External",
+      "level2": "Labor Action",
+      "npt_hours": 746.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 92.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 56.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 36.5
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 32.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 17.5
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 6.0
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 4.5
+    },
+    {
+      "wellbore_key": "19-A",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 3.5
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 170.5
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 136.0
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 121.0
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 37.0
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 12.5
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Wellbore",
+      "level2": "Sidetrack (Corrective)",
+      "npt_hours": 6.0
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "19-B",
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 116.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 111.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 82.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 54.5
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 20.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Wellbore",
+      "level2": "Well Control",
+      "npt_hours": 4.5
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 3.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 3.0
+    },
+    {
+      "wellbore_key": "19-BT2",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 52.5
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 51.0
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 33.5
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Wellbore",
+      "level2": "Sidetrack (Corrective)",
+      "npt_hours": 11.5
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 8.0
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "19-S",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 203.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 194.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 52.5
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Other",
+      "level2": "Operational Failure",
+      "npt_hours": 50.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 33.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Wellbore",
+      "level2": "Sidetrack (Corrective)",
+      "npt_hours": 16.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 11.5
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 8.0
+    },
+    {
+      "wellbore_key": "19-ST2",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 3.5
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 57.75
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 19.0
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 6.25
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 3.5
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.75
+    },
+    {
+      "wellbore_key": "F-1",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "F-1-A",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 6.0
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 202.5
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 96.75
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 22.0
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 13.5
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 9.25
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 3.5
+    },
+    {
+      "wellbore_key": "F-1-B",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 3.25
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 239.75
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 120.5
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 43.25
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 17.75
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 7.83
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 4.25
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 4.17
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Wellbore",
+      "level2": "Well Control",
+      "npt_hours": 1.75
+    },
+    {
+      "wellbore_key": "F-1-C",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 76.0
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 30.75
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 10.5
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 8.5
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 4.75
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 1.25
+    },
+    {
+      "wellbore_key": "F-10",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 0.75
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 70.5
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 61.5
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 56.25
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 12.25
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 12.0
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 3.0
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.75
+    },
+    {
+      "wellbore_key": "F-11",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.5
+    },
+    {
+      "wellbore_key": "F-11-A",
+      "level1": "NPT - Other",
+      "level2": "Unspecified Wait",
+      "npt_hours": 36.0
+    },
+    {
+      "wellbore_key": "F-11-A",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 33.0
+    },
+    {
+      "wellbore_key": "F-11-A",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 2.0
+    },
+    {
+      "wellbore_key": "F-11-A",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 128.42
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 22.0
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 20.75
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 14.83
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 9.33
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 7.5
+    },
+    {
+      "wellbore_key": "F-11-B",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 185.25
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 74.0
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 23.0
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 11.5
+    },
+    {
+      "wellbore_key": "F-11-T2",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 3.25
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 440.25
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 93.25
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 61.75
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 34.0
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 23.17
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 17.58
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Wellbore",
+      "level2": "Well Control",
+      "npt_hours": 2.25
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 2.0
+    },
+    {
+      "wellbore_key": "F-12",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 188.5
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 141.75
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 20.25
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 12.75
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 8.0
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 6.75
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 3.25
+    },
+    {
+      "wellbore_key": "F-14",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.75
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 135.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Wellbore",
+      "level2": "Well Control",
+      "npt_hours": 49.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 42.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 16.25
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 13.75
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 4.25
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 3.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "F-15",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "F-15-A",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 44.0
+    },
+    {
+      "wellbore_key": "F-15-A",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 16.25
+    },
+    {
+      "wellbore_key": "F-15-A",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.25
+    },
+    {
+      "wellbore_key": "F-15-A",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 1.25
+    },
+    {
+      "wellbore_key": "F-15-B",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 7.5
+    },
+    {
+      "wellbore_key": "F-15-B",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 5.5
+    },
+    {
+      "wellbore_key": "F-15-B",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 1.5
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 382.0
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 89.25
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 9.25
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 8.25
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 7.5
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 6.0
+    },
+    {
+      "wellbore_key": "F-15-C",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 2.5
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 187.34
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 122.75
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 57.25
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 23.5
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 19.83
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 18.75
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 3.0
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 2.25
+    },
+    {
+      "wellbore_key": "F-15-D",
+      "level1": "NPT - Wellbore",
+      "level2": "Losses",
+      "npt_hours": 0.75
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 217.0
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 214.0
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 138.5
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 92.75
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 29.75
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 2.75
+    },
+    {
+      "wellbore_key": "F-4",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 2.0
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 95.6
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 59.25
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 26.73
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 13.75
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 12.83
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 7.33
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 2.5
+    },
+    {
+      "wellbore_key": "F-5",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 1.25
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 45.25
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 6.5
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 6.5
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 1.5
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "F-7",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 0.5
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 33.5
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 18.0
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 4.0
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.5
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 1.0
+    },
+    {
+      "wellbore_key": "F-9",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 0.75
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Surface Equipment",
+      "level2": "Repair/Maintenance",
+      "npt_hours": 65.25
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - External",
+      "level2": "Weather",
+      "npt_hours": 9.75
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - External",
+      "level2": "Materials/Logistics",
+      "npt_hours": 9.0
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Other",
+      "level2": "Unclassified",
+      "npt_hours": 6.75
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Fishing",
+      "npt_hours": 4.5
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Downhole Equipment",
+      "level2": "Failure",
+      "npt_hours": 2.25
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Wellbore",
+      "level2": "Hole Instability",
+      "npt_hours": 1.5
+    },
+    {
+      "wellbore_key": "F-9-A",
+      "level1": "NPT - Other",
+      "level2": "HSE/Permits",
+      "npt_hours": 0.5
+    }
   ]
 }
