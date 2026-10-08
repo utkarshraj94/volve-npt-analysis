@@ -45,6 +45,12 @@
         padding: 4px 6px; font-size: 11px; line-height: 1.25; cursor: default; }
   .tm b { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .tm:hover { filter: brightness(1.12); }
+  .g-well { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+  .pie-panel { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; }
+  @media (max-width: 900px) { .g-well { grid-template-columns: 1fr; } .pie-panel { position: static; max-height: none; } }
+  .hint { font-weight: 400; color: var(--slate); }
+  #pie-table th, #pie-table td { padding: 4px 6px; font-size: 12px; }
+  #pie-table td:first-child { text-align: left; }
   .center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
             pointer-events: none; font-size: 18px; font-weight: 600; text-align: center; }
   .center.low { align-items: flex-end; padding-bottom: 18px; font-size: 26px; }
@@ -110,10 +116,16 @@
     <div class="takeaway">Two short wells have the worst NPT rates</div>
     <div class="filters" id="w-filters"></div>
     <div class="cards" id="w-cards"></div>
-    <div class="panel"><h2>NPT % by wellbore</h2>
+    <div class="grid g-well">
+    <div class="panel"><h2>NPT % by wellbore <span class="hint">(click a bar to see its categories below)</span></h2>
       <div class="legend"><span><i class="sw" style="background:#E67E22"></i>Exploration</span><span><i class="sw" style="background:#2E86AB"></i>Development</span></div>
       <div class="cv tall" id="w-wrap"><canvas id="c-well" role="img" aria-label="Horizontal bar chart of NPT percent by wellbore"></canvas></div>
       <div class="note" id="w-note"></div></div>
+    <div class="panel pie-panel"><h2 id="pie-title">NPT hours by category</h2>
+      <div class="cv" style="height:300px"><canvas id="c-pie" role="img" aria-label="Pie chart of NPT hours by category for the selected wellbore"></canvas></div>
+      <div id="pie-table"></div>
+      <div class="note" id="pie-note"></div></div>
+    </div>
   </section>
 
   <!-- COST -->
@@ -177,7 +189,7 @@ Chart.register({ id: 'valueLabels', afterDatasetsDraw(chart) {
       if (meta.type === 'bar') {
         if (chart.options.indexAxis === 'y') { ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; x = el.x + 5; y = el.y; }
         else { ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; x = el.x; y = el.y - 4; }
-      } else if (meta.type === 'doughnut') {
+      } else if (meta.type === 'doughnut' || meta.type === 'pie') {
         const a = (el.startAngle + el.endAngle) / 2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         x = el.x + (el.outerRadius + 17) * Math.cos(a); y = el.y + (el.outerRadius + 13) * Math.sin(a);
       } else { ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; x = el.x; y = el.y - 7; }
@@ -210,6 +222,14 @@ function show(id) {
   else if (D) { Object.values(charts).forEach(c => c.resize()); if (id === 'headline' && tmDraw) tmDraw(); }
 }
 window.addEventListener('resize', () => { if (tmDraw && $('p-headline').classList.contains('active')) tmDraw(); });
+
+// Level 1 groups (largest first) and their colours, shared by the treemap and the pie.
+const L1_COLORS = [C.blue, C.orange, '#5C6B73', '#27AE60', '#8E44AD'];
+function l1Groups() {
+  const tot = {}; D.pareto.forEach(r => { const g = r.level1.replace(/^NPT - /, ''); tot[g] = (tot[g] || 0) + Number(r.npt_hours); });
+  return Object.keys(tot).sort((a, b) => tot[b] - tot[a]);
+}
+const l1Color = g => L1_COLORS[l1Groups().indexOf(g) % L1_COLORS.length];
 
 // Squarified treemap layout: items = [{v, ...}] sorted descending; returns items with x, y, w, h.
 let tmDraw = null;
@@ -264,11 +284,7 @@ function renderHeadline() {
   $('donut-center').innerHTML = (k.total_hours / 1000).toFixed(1) + 'k hrs';
 
   // Treemap: one tile per NPT category (level 2), coloured by its level 1 group.
-  const byL1 = {};
-  D.pareto.forEach(r => { const key = r.level1.replace(/^NPT - /, ''); byL1[key] = (byL1[key] || 0) + Number(r.npt_hours); });
-  const groups = Object.keys(byL1).sort((a, b) => byL1[b] - byL1[a]);
-  const tmColors = [C.blue, C.orange, '#5C6B73', '#27AE60', '#8E44AD'];
-  const colorOf = g => tmColors[groups.indexOf(g) % tmColors.length];
+  const groups = l1Groups(), colorOf = l1Color;
   $('tm-legend').innerHTML = groups.map(g => `<span><i class="sw" style="background:${colorOf(g)}"></i>${g}</span>`).join('');
   tmDraw = () => {
     const box = $('treemap'), W = box.clientWidth, H = box.clientHeight; if (!W || !H) return;
@@ -327,22 +343,24 @@ function renderPareto() {
 }
 
 // ---------- Wellbore ----------
-const WS = { type: 'all', parent: 'all' };
+const WS = { type: 'all', parent: 'all', selected: null };
 function renderWellbore() {
+  const inRows = w => (WS.type === 'all' || (WS.type === 'Exploration') === w.is_exploration) &&
+    (WS.parent === 'all' || w.parent_well === WS.parent) && w.npt_pct !== null;
+  if (WS.selected && !D.wellbores.some(w => w.wellbore_key === WS.selected && inRows(w))) WS.selected = null;
   const parents = [...new Set(D.wellbores.map(w => w.parent_well).filter(Boolean))].sort();
   $('w-filters').innerHTML =
     ['all', 'Exploration', 'Development'].map(t =>
       `<button class="chip" data-type="${t}" aria-pressed="${WS.type === t}">${t === 'all' ? 'All wells' : t}</button>`).join('') +
     `<label for="w-parent" style="margin-left:8px;color:#5C6B73;font-size:12px">Parent well</label>
-     <select id="w-parent"><option value="all">All</option>${parents.map(p => `<option>${p}</option>`).join('')}</select>`;
+     <select id="w-parent"><option value="all">All</option>${parents.map(p => `<option>${p}</option>`).join('')}</select>` +
+    (WS.selected ? `<button class="chip" id="w-clear" style="margin-left:8px">Clear selection: ${WS.selected} ✕</button>` : '');
   $('w-parent').value = WS.parent;
   document.querySelectorAll('#w-filters .chip').forEach(b => b.onclick = () => { WS.type = b.dataset.type; renderWellbore(); });
   $('w-parent').onchange = e => { WS.parent = e.target.value; renderWellbore(); };
+  if ($('w-clear')) $('w-clear').onclick = () => { WS.selected = null; renderWellbore(); };
 
-  const rows = D.wellbores.filter(w =>
-    (WS.type === 'all' || (WS.type === 'Exploration') === w.is_exploration) &&
-    (WS.parent === 'all' || w.parent_well === WS.parent) && w.npt_pct !== null)
-    .sort((a, b) => b.npt_pct - a.npt_pct);
+  const rows = D.wellbores.filter(inRows).sort((a, b) => b.npt_pct - a.npt_pct);
   if (!rows.length) { $('w-cards').innerHTML = card('Wellbores', '0'); return; }
   const worst = rows[0], best = rows[rows.length - 1];
   $('w-cards').innerHTML = card('Wellbores shown', rows.length) +
@@ -351,9 +369,13 @@ function renderWellbore() {
   $('w-wrap').style.height = Math.max(200, rows.length * 22 + 50) + 'px';
   mk('c-well', { type: 'bar',
     data: { labels: rows.map(w => w.wellbore_key),
-      datasets: [{ data: rows.map(w => Number(w.npt_pct)), backgroundColor: rows.map(wellColor),
+      datasets: [{ data: rows.map(w => Number(w.npt_pct)),
+        backgroundColor: rows.map(w => WS.selected && w.wellbore_key !== WS.selected ? wellColor(w) + '55' : wellColor(w)),
         valueLabel: { fmt: v => n1(v) + '%' } }] },
-    options: { indexAxis: 'y', layout: { padding: { right: 46 } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
+    options: { indexAxis: 'y', layout: { padding: { right: 46 } },
+      onClick: (e, els) => { if (!els.length) return; const key = rows[els[0].index].wellbore_key; WS.selected = WS.selected === key ? null : key; setTimeout(renderWellbore, 0); },  // redraw after Chart.js finishes handling the click
+      onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => {
       const w = rows[c.dataIndex];
       return [`Wellbore ${w.wellbore_key} lost ${n1(w.npt_pct)}% of its rig hours to NPT`,
               `(${n0(w.npt_hours)} of ${n0(w.total_hours)} hours, ${w.is_exploration ? 'exploration' : 'development'} well).`]; } } } },
@@ -367,6 +389,40 @@ function renderWellbore() {
   $('w-note').innerHTML = `Exploration wells average ${n1(grp(true))}% NPT against ${n1(grp(false))}% for development wells. ` +
     `The two highest rates (19-B and F-11) are on short wells of under 650 hours each. ` +
     `${need} of ${D.wellbores.length} wellbores account for ${(100 * cum / tot).toFixed(0)}% of all NPT hours.`;
+  renderPie(rows);
+}
+
+// Pie + table: NPT hours by category for the selected wellbore (or for all wells currently shown).
+function renderPie(rows) {
+  const keys = new Set(WS.selected ? [WS.selected] : rows.map(r => r.wellbore_key));
+  const agg = {};
+  D.well_category.filter(r => keys.has(r.wellbore_key)).forEach(r => {
+    const g = r.level1.replace(/^NPT - /, ''), id = g + ' / ' + r.level2;
+    (agg[id] = agg[id] || { g, label: id, v: 0 }).v += Number(r.npt_hours);
+  });
+  const items = Object.values(agg).sort((a, b) => b.v - a.v), total = items.reduce((s, i) => s + i.v, 0);
+  const seen = {}, ALPHA = ['', 'CC', '99', '77', '55'];  // shade categories within a group
+  items.forEach(i => { const k = seen[i.g] = (seen[i.g] || 0) + 1; i.col = l1Color(i.g) + ALPHA[(k - 1) % ALPHA.length]; });
+  const all = !WS.selected && rows.length === D.wellbores.length;
+  const who = WS.selected ? 'well ' + WS.selected : (all ? 'all wellbores' : 'the wellbores shown');
+  $('pie-title').textContent = 'NPT hours by category: ' + (WS.selected || (all ? 'all wellbores' : 'filtered wellbores'));
+  mk('c-pie', { type: 'pie',
+    data: { labels: items.map(i => i.label), datasets: [{ data: items.map(i => i.v), backgroundColor: items.map(i => i.col),
+      borderColor: '#fff', borderWidth: 2,
+      valueLabel: { fmt: v => (100 * v / total >= 4 ? n1(100 * v / total) + '%' : ''), font: '600 11px "Segoe UI", Arial' } }] },
+    options: { layout: { padding: 30 }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => [
+      items[c.dataIndex].label + ':',
+      `${n0(c.parsed)} NPT hours (${n1(100 * c.parsed / total)}% of ${who}'s NPT)`] } } } } });
+  $('pie-table').innerHTML = '<table><tr><th>Category</th><th>Hours</th><th>%</th></tr>' +
+    items.map(i => `<tr><td><i class="sw" style="background:${i.col}"></i>${i.label}</td><td>${n1(i.v)}</td><td>${n1(100 * i.v / total)}%</td></tr>`).join('') +
+    `<tr class="total"><td>Total</td><td>${n1(total)}</td><td>100.0%</td></tr></table>`;
+  if (WS.selected) {
+    const w = D.wellbores.find(x => x.wellbore_key === WS.selected), top = items[0];
+    $('pie-note').textContent = `Well ${WS.selected} lost ${n0(total)} hours to NPT (${n1(w.npt_pct)}% of its rig hours). ` +
+      `The largest category was ${top.label}, at ${n1(100 * top.v / total)}% of its NPT.`;
+  } else {
+    $('pie-note').textContent = 'Click a bar in the chart above to see one well’s breakdown; click it again to clear.';
+  }
 }
 
 // ---------- Cost ----------

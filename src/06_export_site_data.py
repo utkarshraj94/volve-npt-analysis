@@ -69,6 +69,15 @@ with engine.connect() as conn:
         ORDER BY p.cum_oil_bbl DESC
     """)
 
+    well_category = rows(conn, """
+        SELECT a.wellbore_key, c.level1, c.level2, SUM(a.hours) AS npt_hours
+        FROM fact_drilling_activity a
+        JOIN dim_npt_category c ON a.npt_cat_id = c.npt_cat_id
+        WHERE a.is_npt_final
+        GROUP BY a.wellbore_key, c.level1, c.level2
+        ORDER BY a.wellbore_key, npt_hours DESC
+    """)
+
 for w in wellbores:
     w["npt_cost_usd"] = float(w["npt_hours"]) * RATE
 for p in producers:
@@ -81,6 +90,7 @@ data = {
     "wellbores": wellbores,
     "by_year": by_year,
     "producers": producers,
+    "well_category": well_category,
 }
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -88,4 +98,4 @@ OUT.write_text(json.dumps(data, indent=2, default=float), encoding="utf-8")
 
 print(f"wrote {OUT}")
 print(f"total hours {k['total_hours']:.1f}, NPT {k['npt_hours']:.1f} ({k['npt_pct']:.2f}%)")
-print(f"pareto rows {len(pareto)}, wellbores {len(wellbores)}, years {len(by_year)}, producers {len(producers)}")
+print(f"pareto rows {len(pareto)}, wellbores {len(wellbores)}, years {len(by_year)}, producers {len(producers)}, well-category rows {len(well_category)}")
