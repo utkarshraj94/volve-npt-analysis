@@ -35,7 +35,7 @@ Five-page Power BI report: Headline, Pareto, Wellbore, Cost, NPT vs Production.
 
 Files: [`powerbi/volve_npt.pbix`](powerbi/volve_npt.pbix) and a
 [PDF export](powerbi/volve_npt_report.pdf). Full write-up:
-[`docs/Volve_NPT_Project_Report.docx`](docs/Volve_NPT_Project_Report.docx).
+[`docs/Volve_NPT_Project_Report.pdf`](docs/Volve_NPT_Project_Report.pdf).
 
 ## Reproduce
 
